@@ -8,8 +8,8 @@ var expressLayouts = require('express-ejs-layouts');
 var app = express();
 var router = express.Router()
 
-var moongoose = require('mongoose');
-moongoose.connect('mongodb://localhost/animalshelter');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/animalshelter');
 
 
 app.use(logger('dev'));
