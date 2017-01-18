@@ -2,14 +2,13 @@ var express = require('express');
 var path = require('path');
 var debug = require("debug");
 var logger = require('morgan');
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var expressLayouts = require('express-ejs-layouts');
 var app = express();
 var animalsCtrl = require("./controllers/animals")
 
-var moongoose = require('mongoose');
-moongoose.connect('mongodb://localhost/animalshelter');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/animalshelter');
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
