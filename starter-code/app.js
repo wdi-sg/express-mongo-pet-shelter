@@ -1,23 +1,27 @@
-var express = require('express');
-var path = require('path');
-var debug = require("debug");
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var expressLayouts = require('express-ejs-layouts');
-var app = express();
-var router = express.Router()
+const express = require('express')
+const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const logger = require('morgan')
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/animalshelter');
+const app = express()
+const router = express.Router()
 
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/animalshelter', {
+  useMongoClient: true
+})
 
-app.use(logger('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('views', path.join(__dirname, 'views'));
-app.use(expressLayouts)
-app.engine('ejs', require('ejs').renderFile);
-app.set('view engine', 'ejs');
+app.use(logger('dev'))
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.set('views', path.join(__dirname, 'views'))
+
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  partialsDir: 'views/partials'
+}))
+app.set('view engine', 'handlebars')
 
 // development error handler
 // will print stacktrace
@@ -31,4 +35,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-app.listen(3000)
+const port = process.env.PORT || 3000
+app.listen(port, function(req, res) {
+  console.log('Express is running on port ' + port)
+})
